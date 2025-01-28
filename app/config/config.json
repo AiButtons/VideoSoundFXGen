@@ -1,0 +1,12 @@
+{
+    "deployment":{
+        "name": "aibuttons-videoSoundFXGen"
+    },
+    "s3":{
+        "bucket_name": "zennah-artifacts"
+    },
+    "modal" : {
+        "api_key": " "
+    }
+
+}

@@ -1,0 +1,11 @@
+__pycache__
+**/__pycache__
+**/**.mp4
+**/**.glb
+**/**.png
+**/**.flac
+**/**.wav
+**/cdk.out
+cdk.out
+cdk.out/*
+**/cdk.out/**
