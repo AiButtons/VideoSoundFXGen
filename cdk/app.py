@@ -11,15 +11,24 @@ from aws_cdk import (
 )
 from constructs import Construct
 import os
+from config.config_parser import get_config 
 
+config = get_config()
 class FastAPIFunctionStack(Stack):
 
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
-
+        api_key = CfnParameter(
+            self, "ApiKey",
+            type="String",
+            description="API Key for the Lambda function",
+            no_echo=True
+        )
+        
         # Reference existing SAM-managed S3 bucket
         sam_artifact_bucket = s3.Bucket(
             self, "AibuttonsVideoArtifactBucket",
+            bucket_name=config.get('s3', {}).get('bucket_name', 'videosoundfxgen-artifacts'),
             removal_policy=RemovalPolicy.DESTROY,
             auto_delete_objects=True,
             cors=[s3.CorsRule(
@@ -28,13 +37,6 @@ class FastAPIFunctionStack(Stack):
                 allowed_headers=['*'],
                 exposed_headers=['ETag', 'Content-Type', 'Accept-Ranges', 'Content-Range']
             )],
-        )
-
-
-        # Reference existing ECR repository
-        ecr_repository = ecr.Repository.from_repository_name(
-            self, "ECRRepo",
-            repository_name="aibuttonsvideo2437f3f2/fastapifunctionead79d0drepo"
         )
 
         current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -51,13 +53,12 @@ class FastAPIFunctionStack(Stack):
             environment={
                 "AWS_LWA_INVOKE_MODE": "RESPONSE_STREAM",
                 "S3_BUCKET_NAME": sam_artifact_bucket.bucket_name,
-                #"OPENAI_API_KEY": openai_api_key.value_as_string,
-                "JWT_TOKEN": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2aWRlb19nZW5lcmF0aW9uIn0.Zkewz_CL3-k7ilnV_6xgOzRaKXXoz1PnrIejacrYqvw",
-                "FASTVIDEO_ENDPOINT": "https://zennah-jewel--fasthunyuan-fastvideo-generate.modal.run", # from updated config
-                "MMAUDIO_ENDPOINT" : "https://schooluniguide--mmaudio-synthesis-model-generate.modal.run"
+                "API_KEY": api_key.value_as_string,
+                "FASTVIDEO_ENDPOINT": config.get('endpoints', {}).get('FASTVIDEO_ENDPOINT'),
+                "MMAUDIO_ENDPOINT": config.get('endpoints', {}).get('MMAUDIO_ENDPOINT')
             },
             tracing=lambda_.Tracing.ACTIVE,
-            
+                    
         )
         sam_artifact_bucket.grant_read_write(fastapi_function)
         # Define Function URL
@@ -86,7 +87,6 @@ class FastAPIFunctionStack(Stack):
         )
 
 from aws_cdk import App
-
 app = App()
-FastAPIFunctionStack(app, "AibuttonsVideoGen")
+FastAPIFunctionStack(app, config.get('deployment', {}).get('name', 'AibuttonsVideoSoundFxGen'))
 app.synth()

@@ -91,7 +91,7 @@ app = modal.App(name="fasthunyuan", image=image)
 @app.cls(
     gpu=modal.gpu.A100(size='80GB', count=NUM_GPUS),
     timeout=1 * HOURS,
-    container_idle_timeout=3 * MINUTES,
+    container_idle_timeout=10 * MINUTES,
     volumes={MODEL_PATH: model_volume},
     secrets=[modal.Secret.from_name("api-key")]
 )

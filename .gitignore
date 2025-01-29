@@ -5,6 +5,7 @@ __pycache__
 **/**.png
 **/**.flac
 **/**.wav
+**/**.json.tmp
 **/cdk.out
 cdk.out
 cdk.out/*
