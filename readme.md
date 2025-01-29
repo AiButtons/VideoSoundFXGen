@@ -1,4 +1,4 @@
-# AI Video & Sound Generator
+# AI Video & Sound FX Generator
 
 A Gradio app deployed on AWS Lambda using web adapter that lets you generate videos from text and add AI-generated sound effects. Uses FastHunyuan for video and MMAudio for audio generation.
 
