@@ -10,6 +10,7 @@ A Gradio app deployed on AWS Lambda using web adapter that lets you generate vid
 - Modal account
 - AWS account
 - Node.js 18+ (for CDK)
+- WSL/ Linux/ macOS (bash shell required)
 
 ## Deploy
 
