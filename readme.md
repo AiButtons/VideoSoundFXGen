@@ -30,7 +30,7 @@ cdk bootstrap
 3. Run deployment:
 ```bash
 chmod +x setup.sh
-./setup.sh <your-password>  # Password used for endpoint authentication
+./setup.sh <your-password>  # Password used for endpoint authentication 
 ```
 
 The script:
