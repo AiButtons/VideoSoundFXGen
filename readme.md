@@ -1,4 +1,4 @@
-# AI Video & Sound Generator
+# AI Video & Sound FX Generator
 
 A Gradio app deployed on AWS Lambda using web adapter that lets you generate videos from text and add AI-generated sound effects. Uses FastHunyuan for video and MMAudio for audio generation.
 
@@ -10,6 +10,7 @@ A Gradio app deployed on AWS Lambda using web adapter that lets you generate vid
 - Modal account
 - AWS account
 - Node.js 18+ (for CDK)
+- WSL/ Linux/ macOS (bash shell required)
 
 ## Deploy
 
@@ -20,11 +21,10 @@ python -m modal setup
 ```
 
 2. AWS & CDK setup:
-```bash 
+```bash
 aws configure
 npm install -g aws-cdk
 cdk bootstrap
-
 ```
 
 3. Run deployment:
