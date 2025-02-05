@@ -134,7 +134,8 @@ app = modal.App(name="mmaudio-synthesis")
 class Model:
         
     
-    @modal.enter()     
+    #@modal.enter(snap=True)     
+    @modal.enter()   
     def intialize(self):
         import torch
         from MMAudio.mmaudio.model.flow_matching import FlowMatching
