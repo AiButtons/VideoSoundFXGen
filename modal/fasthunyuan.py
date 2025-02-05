@@ -91,13 +91,13 @@ app = modal.App(name="fasthunyuan", image=image)
 @app.cls(
     gpu=modal.gpu.A100(size='80GB', count=NUM_GPUS),
     timeout=1 * HOURS,
-    container_idle_timeout=10 * MINUTES,
+    container_idle_timeout=1 * MINUTES,
     volumes={MODEL_PATH: model_volume},
     secrets=[modal.Secret.from_name("api-key")],
     enable_memory_snapshot=True
 )
 class FastVideo:
-    @modal.enter()    
+    @modal.enter(snap=True)    
     def initialize(self):
         
         from diffusers import (
@@ -149,6 +149,10 @@ class FastVideo:
             ),
             "crop_start": 95,
         }
+        
+    @modal.enter(snap=False)    
+    def initialize_gpu(self):       
+        self.pipe.to("cuda")
 
     def _inference(
         self,
