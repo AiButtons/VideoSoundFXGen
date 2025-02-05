@@ -128,7 +128,8 @@ app = modal.App(name="mmaudio-synthesis")
         MODELS_PATH: model_volume,        # Mount directly where MMAudio looks
         CHECKPOINT_CACHE_PATH: cache_volume
         },
-    secrets=[modal.Secret.from_name("api-key")]
+    secrets=[modal.Secret.from_name("api-key")],
+    enable_memory_snapshot=True
 )
 class Model:
         

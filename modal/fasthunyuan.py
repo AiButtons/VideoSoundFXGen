@@ -93,7 +93,8 @@ app = modal.App(name="fasthunyuan", image=image)
     timeout=1 * HOURS,
     container_idle_timeout=10 * MINUTES,
     volumes={MODEL_PATH: model_volume},
-    secrets=[modal.Secret.from_name("api-key")]
+    secrets=[modal.Secret.from_name("api-key")],
+    enable_memory_snapshot=True
 )
 class FastVideo:
     @modal.enter()    
